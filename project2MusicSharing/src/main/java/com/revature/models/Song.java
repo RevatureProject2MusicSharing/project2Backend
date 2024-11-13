@@ -1,0 +1,93 @@
+package com.revature.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+@Table
+@Entity(name = "songs")
+public class Song {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int songId;
+
+    @Column(nullable = false)
+    private String songName;
+
+    @Column(nullable = false)
+    private String youtubeLink;
+
+    @Column(nullable = false)
+    private String genre;
+
+    @OneToMany(mappedBy = "songId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Playlist> playlistList;
+
+    public Song() {
+    }
+
+    public Song(int songId, String songName, String youtubeLink, String genre, List<Playlist> playlistList) {
+        this.songId = songId;
+        this.songName = songName;
+        this.youtubeLink = youtubeLink;
+        this.genre = genre;
+        this.playlistList = playlistList;
+    }
+
+    public int getSongId() {
+        return songId;
+    }
+
+    public void setSongId(int songId) {
+        this.songId = songId;
+    }
+
+    public String getSongName() {
+        return songName;
+    }
+
+    public void setSongName(String songName) {
+        this.songName = songName;
+    }
+
+    public String getYoutubeLink() {
+        return youtubeLink;
+    }
+
+    public void setYoutubeLink(String youtubeLink) {
+        this.youtubeLink = youtubeLink;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public List<Playlist> getPlaylistList() {
+        return playlistList;
+    }
+
+    public void setPlaylistList(List<Playlist> playlistList) {
+        this.playlistList = playlistList;
+    }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "songId=" + songId +
+                ", songName='" + songName + '\'' +
+                ", youtubeLink='" + youtubeLink + '\'' +
+                ", genre='" + genre + '\'' +
+                ", playlistList=" + playlistList +
+                '}';
+    }
+}
