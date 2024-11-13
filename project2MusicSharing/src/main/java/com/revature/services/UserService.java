@@ -24,7 +24,6 @@ public class UserService {
         }
         userDAO.save(user);
 
-        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
-
+        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getPassword());
     }
 }
