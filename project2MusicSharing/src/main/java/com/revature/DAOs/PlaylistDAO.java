@@ -1,6 +1,6 @@
-package com.revature.project2MusicSharing.daos;
+package com.revature.daos;
 
-import com.revature.project2MusicSharing.models.Playlist;
+import com.revature.models.Playlist;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
