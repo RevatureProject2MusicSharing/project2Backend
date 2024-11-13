@@ -5,9 +5,7 @@ import com.revature.models.User;
 import com.revature.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -22,5 +20,10 @@ public class UserController {
     @PostMapping
     ResponseEntity<OutgoingUserDTO> registerUser(User user) {
         return ResponseEntity.ok().body(userService.addUser(user));
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<String> deleteUser(@PathVariable int id) {
+        return ResponseEntity.ok().body(userService.deleteUser(id));
     }
 }
