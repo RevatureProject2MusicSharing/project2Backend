@@ -6,8 +6,6 @@ import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserService {
     private UserDAO userDAO;
@@ -26,17 +24,7 @@ public class UserService {
         }
         userDAO.save(user);
 
-        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getPassword());
+        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
+
     }
-
-    public String deleteUser(int id) {
-        Optional<User> user = userDAO.findById(id);
-        if(user.isEmpty()) {
-            throw new IllegalArgumentException("This user does not exist!");
-        }
-        userDAO.deleteById(id);
-        return "User ID: " + id + " has been deleted";
-    }
-
-
 }

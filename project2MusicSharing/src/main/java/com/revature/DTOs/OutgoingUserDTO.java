@@ -40,7 +40,7 @@ public class OutgoingUserDTO {
 
     @Override
     public String toString() {
-        return "OutgoingUserDTO{" +
+        return "IncomingUserDTO{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", role='" + role + '\'' +
