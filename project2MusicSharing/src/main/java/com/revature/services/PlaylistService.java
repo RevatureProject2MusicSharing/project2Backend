@@ -1,11 +1,8 @@
-package com.revature.project2MusicSharing.services;
-import com.revature.project2MusicSharing.daos.PlaylistDAO
+package com.revature.services;
+import com.revature.daos.PlaylistDAO
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlaylistService {
