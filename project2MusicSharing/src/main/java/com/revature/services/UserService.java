@@ -29,6 +29,25 @@ public class UserService {
         return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
     }
 
+    public String updateRole(int id, String newRole) {
+        Optional<User> user = userDAO.findById(id);
+        if(user.isEmpty()) {
+            throw new IllegalArgumentException("This user does not exist!");
+        }
+        user.get().setRole(newRole);
+        userDAO.save(user.get());
+        if(newRole.equals("admin") || newRole.equals("Admin")) {
+            return "User ID: " + id + " has promoted to an admin";
+        }
+        else if(newRole.equals("user") || newRole.equals("User")) {
+            return "User ID" + id + " has been denoted to a user";
+        }
+        else {
+            throw new IllegalArgumentException("This is not a valid role type!");
+        }
+
+    }
+
     public String deleteUser(int id) {
         Optional<User> user = userDAO.findById(id);
         if(user.isEmpty()) {
