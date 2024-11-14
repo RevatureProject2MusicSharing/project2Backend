@@ -18,6 +18,10 @@ public class UserService {
     }
 
     public OutgoingUserDTO addUser(User user) {
+        System.out.println("hello");
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println(user.getRole());
         if(user.getUsername() == null || user.getUsername().isBlank()) {
             throw new IllegalArgumentException("The username cannot be empty!");
         }

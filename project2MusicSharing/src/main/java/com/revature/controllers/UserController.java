@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping
-    ResponseEntity<OutgoingUserDTO> registerUser(User user) {
+    ResponseEntity<OutgoingUserDTO> registerUser(@RequestBody User user) {
         return ResponseEntity.ok().body(userService.addUser(user));
     }
 
