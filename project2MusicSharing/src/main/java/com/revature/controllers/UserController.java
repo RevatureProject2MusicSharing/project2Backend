@@ -22,6 +22,11 @@ public class UserController {
         return ResponseEntity.ok().body(userService.addUser(user));
     }
 
+    @PatchMapping("/{id}")
+    ResponseEntity<String> updateRole(@PathVariable int id, @RequestBody String newRole) {
+        return ResponseEntity.ok().body(userService.updateRole(id, newRole));
+    }
+
     @DeleteMapping("/{id}")
     ResponseEntity<String> deleteUser(@PathVariable int id) {
         return ResponseEntity.ok().body(userService.deleteUser(id));

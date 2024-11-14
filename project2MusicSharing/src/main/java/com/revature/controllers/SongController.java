@@ -38,5 +38,8 @@ public class SongController {
         return ResponseEntity.ok(songService.removeSongById(songId));
     }
 
-
+    @ExceptionHandler
+    public ResponseEntity<String> illegalArgumentHandler(IllegalArgumentException e) {
+        return ResponseEntity.status(400).body(e.getMessage());
+    }
 }
