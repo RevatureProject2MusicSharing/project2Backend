@@ -2,6 +2,7 @@ package com.revature.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "userList")
     @JsonIgnore
-    private List<Playlist> playlistList;
+    private Set<Playlist> playlistList;
 
     public User() {
         this.role = "user";
@@ -63,11 +64,11 @@ public class User {
         this.role = role;
     }
 
-    public List<Playlist> getPlaylistList() {
+    public Set<Playlist> getPlaylistList() {
         return playlistList;
     }
 
-    public void setPlaylistList(List<Playlist> playlistList) {
+    public void setPlaylistList(Set<Playlist> playlistList) {
         this.playlistList = playlistList;
     }
 

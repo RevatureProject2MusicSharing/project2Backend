@@ -1,4 +1,4 @@
-package com.revature.daos;
+package com.revature.DAOs;
 
 import com.revature.models.Playlist;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +10,7 @@ public interface PlaylistDAO extends JpaRepository <Playlist, Integer> {
 
     // Method to add a song to a Playlist
 
-    Playlist addSongtoPlaylist (String song);
+    //Not sure if this works
+    //Playlist addSongtoPlaylist (String song);
 
 }
