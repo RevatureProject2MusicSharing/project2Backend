@@ -25,7 +25,12 @@ public class Song {
     @Column(nullable = false)
     private String genre;
 
-    @OneToMany(mappedBy = "songId", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+        name = "song_playlist",
+        joinColumns = @JoinColumn(name = "songId"),
+        inverseJoinColumns = @JoinColumn(name = "playlistId")
+    )
     @JsonIgnore
     private List<Playlist> playlistList;
 
