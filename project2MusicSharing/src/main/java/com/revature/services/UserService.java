@@ -54,6 +54,6 @@ public class UserService {
             throw new IllegalArgumentException("This user does not exist!");
         }
         userDAO.deleteById(id);
-        return "User ID: " + id + " does not exist!";
+        return "User ID: " + id + " has been deleted!";
     }
 }
