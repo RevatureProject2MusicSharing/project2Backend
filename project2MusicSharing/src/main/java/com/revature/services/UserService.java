@@ -1,10 +1,12 @@
 package com.revature.services;
 
 import com.revature.DAOs.UserDAO;
-import com.revature.DTOs.OutgoingUserDTO;
+import com.revature.models.dtos.OutgoingUserDTO;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,4 +28,15 @@ public class UserService {
 
         return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getPassword());
     }
+
+    public String deleteUser(int id) {
+        Optional<User> user = userDAO.findById(id);
+        if(user.isEmpty()) {
+            throw new IllegalArgumentException("This user does not exist!");
+        }
+        userDAO.deleteById(id);
+        return "User ID: " + id + " has been deleted";
+    }
+
+
 }

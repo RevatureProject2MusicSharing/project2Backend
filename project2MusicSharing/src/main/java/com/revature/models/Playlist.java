@@ -1,7 +1,8 @@
-package com.revature.project2MusicSharing.models;
+package com.revature.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Component;
 
 
@@ -22,6 +23,16 @@ public class Playlist {
     @Column(nullable = true)
     private boolean isPublic;
 
+    @ManyToMany(mappedBy = "playlistList")
+    private Set<Song> songList;
+
+    @ManyToMany
+    @JoinTable(
+        name = "playlist_user",
+        joinColumns = @JoinColumn(name = "playlistId"),
+        inverseJoinColumns = @JoinColumn(name = "userId"))
+    private Set<User> userList;
+
     //boilerplate code-----------------------
 
 
@@ -32,6 +43,22 @@ public class Playlist {
         this.playlistId = playlistId;
         this.playlistName = playlistName;
         this.isPublic = isPublic;
+    }
+
+    public Set<Song> getSongList() {
+        return songList;
+    }
+
+    public void setSongList(Set<Song> songList) {
+        this.songList = songList;
+    }
+
+    public Set<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Set<User> userList) {
+        this.userList = userList;
     }
 
     public int getPlaylistId() {

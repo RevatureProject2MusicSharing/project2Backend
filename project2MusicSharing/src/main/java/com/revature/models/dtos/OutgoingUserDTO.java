@@ -1,4 +1,4 @@
-package com.revature.DTOs;
+package com.revature.models.dtos;
 
 public class OutgoingUserDTO {
     private int userId;
