@@ -15,13 +15,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String role;
 
     @ManyToMany(mappedBy = "userList")
@@ -30,6 +29,13 @@ public class User {
 
     public User() {
         this.role = "user";
+    }
+
+    public User(int userId, String username, String password, String role) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public int getUserId() {

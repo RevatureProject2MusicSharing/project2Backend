@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin
 public class UserController {
 
     private UserService userService;
@@ -19,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping
-    ResponseEntity<OutgoingUserDTO> registerUser(User user) {
+    ResponseEntity<OutgoingUserDTO> registerUser(@RequestBody User user) {
         return ResponseEntity.ok().body(userService.addUser(user));
     }
 
