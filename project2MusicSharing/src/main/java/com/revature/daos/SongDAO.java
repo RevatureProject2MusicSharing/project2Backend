@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface SongDAO extends JpaRepository<Song, Integer> {
-    @Query(value = "SELECT * FROM song ORDER BY RAND() LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT * FROM p2actual.songs ORDER BY RANDOM() LIMIT 1", nativeQuery = true)
     Optional<Song> findRandomSong();
 }
