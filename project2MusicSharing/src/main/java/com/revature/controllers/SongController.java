@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 
 @RestController
@@ -25,6 +26,12 @@ public class SongController {
     public ResponseEntity<List<Song>> getAllSongs() {
         List<Song> allSongs = songService.getAllSongs();
         return ResponseEntity.ok(allSongs);
+    }
+
+    @GetMapping("/playlist/{playlistId}")
+    public ResponseEntity<List<Song>> getSongsByPlaylist(@PathVariable int playlistId) {
+        List<Song> songs = songService.getSongsByPlaylistId(playlistId);
+        return ResponseEntity.ok(songs);
     }
 
     @PostMapping
