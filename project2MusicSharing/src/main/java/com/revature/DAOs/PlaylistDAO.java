@@ -1,4 +1,4 @@
-package com.revature.DAOs;
+package com.revature.daos;
 
 import com.revature.models.Playlist;
 import org.springframework.data.jpa.repository.JpaRepository;
