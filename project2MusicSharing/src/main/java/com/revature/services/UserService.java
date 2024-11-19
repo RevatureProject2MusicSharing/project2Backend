@@ -6,6 +6,8 @@ import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,7 +42,7 @@ public class UserService {
             return "User ID: " + id + " has promoted to an admin";
         }
         else if(newRole.equals("user") || newRole.equals("User")) {
-            return "User ID" + id + " has been denoted to a user";
+            return "User ID: " + id + " has been denoted to a user";
         }
         else {
             throw new IllegalArgumentException("This is not a valid role type!");
@@ -54,6 +56,16 @@ public class UserService {
             throw new IllegalArgumentException("This user does not exist!");
         }
         userDAO.deleteById(id);
-        return "User ID: " + id + " does not exist!";
+        return "User ID: " + id + " has been deleted!";
+    }
+
+    public List<OutgoingUserDTO> getAllUsers() {
+        List<User> users = userDAO.findAll();
+        List<OutgoingUserDTO> outgoingUserList = new ArrayList<>();
+        for(User user: users) {
+            OutgoingUserDTO outgoingUser = new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
+            outgoingUserList.add(outgoingUser);
+        }
+        return outgoingUserList;
     }
 }
