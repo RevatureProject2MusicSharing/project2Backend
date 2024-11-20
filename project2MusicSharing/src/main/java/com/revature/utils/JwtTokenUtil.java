@@ -52,7 +52,7 @@ public class JwtTokenUtil {
             .setSubject(String.format("%s", u.getUserId())) //subject is typically ID
             .claim("username", u.getUsername()) //any other data can be set as a claim
             .claim("role", u.getRole())
-            .setIssuer("Project2")
+            .setIssuer("ProjectMusicSharing")
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_DURATION))
             .signWith(SignatureAlgorithm.HS512, SECRET_KEY)

@@ -118,7 +118,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         System.out.println("user: " + userDetails);
         System.out.println("role: " + userDetails.getRole());
 
-        return (UserDetails) userDetails;
+        return userDetails;
     }
 
 }

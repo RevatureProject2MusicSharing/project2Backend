@@ -4,6 +4,7 @@ import com.revature.daos.UserDAO;
 import com.revature.models.dtos.OutgoingUserDTO;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,9 +15,14 @@ import java.util.Optional;
 public class UserService {
     private UserDAO userDAO;
 
+    //Adding a password encoder to encrypted passwords
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserService(UserDAO userDAO) {
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder) {
+
         this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public OutgoingUserDTO addUser(User user) {
@@ -26,6 +32,13 @@ public class UserService {
         else if(user.getPassword() == null || user.getPassword().isBlank()) {
             throw new IllegalArgumentException("The password cannot be empty!");
         }
+
+        //Password Encryption
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //Use our password encoder autowired in SecurityConfig to
+
+
+
         userDAO.save(user);
 
         return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
