@@ -21,10 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
-    ResponseEntity<OutgoingUserDTO> registerUser(@RequestBody User user) {
-        return ResponseEntity.ok().body(userService.addUser(user));
-    }
+
 
     @PatchMapping("/{id}")
     ResponseEntity<String> updateRole(@PathVariable int id, @RequestBody String newRole) {

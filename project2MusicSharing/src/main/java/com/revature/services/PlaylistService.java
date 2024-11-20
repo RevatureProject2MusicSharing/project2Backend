@@ -4,15 +4,8 @@ import com.revature.daos.UserDAO;
 import com.revature.daos.PlaylistDAO;
 import com.revature.models.Playlist;
 import com.revature.models.dtos.IncomingPlaylistDTO;
-import com.revature.models.dtos.IncomingSongDTO;
-import com.revature.models.Song;
-import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PlaylistService {

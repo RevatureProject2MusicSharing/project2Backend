@@ -3,7 +3,14 @@ package com.revature.services;
 import com.revature.daos.UserDAO;
 import com.revature.models.dtos.OutgoingUserDTO;
 import com.revature.models.User;
+import com.revature.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,23 +19,39 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
+
+    //Adding a password encoder to encrypted passwords
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManger;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public UserService(UserDAO userDAO) {
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManger,
+        JwtTokenUtil jwtTokenUtil) {
+
         this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManger = authenticationManger;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public OutgoingUserDTO addUser(User user) {
+    public User addUser(User user) {
         if(user.getUsername() == null || user.getUsername().isBlank()) {
             throw new IllegalArgumentException("The username cannot be empty!");
         }
         else if(user.getPassword() == null || user.getPassword().isBlank()) {
             throw new IllegalArgumentException("The password cannot be empty!");
         }
-        userDAO.save(user);
 
-        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
+        //Password Encryption
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //Use our password encoder autowired in SecurityConfig to
+        if(userDAO.findByUsername(user.getUsername())!=null) {
+            throw new IllegalArgumentException("This username already exists!");
+        }
+
+        return userDAO.save(user);
     }
 
     public String updateRole(int id, String newRole) {
@@ -67,5 +90,14 @@ public class UserService {
             outgoingUserList.add(outgoingUser);
         }
         return outgoingUserList;
+    }
+
+    public OutgoingUserDTO loginUser(User user) {
+        Authentication authentication = authenticationManger.authenticate(
+            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        User verifedUser = userDAO.findByUsername(user.getUsername());
+        return new OutgoingUserDTO(verifedUser.getUserId(), verifedUser.getUsername(), verifedUser.getRole(),jwtTokenUtil.generateAccessToken(verifedUser));
     }
 }
