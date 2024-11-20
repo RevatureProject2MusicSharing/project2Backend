@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class UserService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    public OutgoingUserDTO addUser(User user) {
+    public User addUser(User user) {
         if(user.getUsername() == null || user.getUsername().isBlank()) {
             throw new IllegalArgumentException("The username cannot be empty!");
         }
@@ -50,10 +51,7 @@ public class UserService {
             throw new IllegalArgumentException("This username already exists!");
         }
 
-        userDAO.save(user);
-
-
-        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole(),jwtTokenUtil.generateAccessToken(user));
+        return userDAO.save(user);
     }
 
     public String updateRole(int id, String newRole) {
@@ -99,6 +97,7 @@ public class UserService {
             new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole(),jwtTokenUtil.generateAccessToken(user));
+        User verifedUser = userDAO.findByUsername(user.getUsername());
+        return new OutgoingUserDTO(verifedUser.getUserId(), verifedUser.getUsername(), verifedUser.getRole(),jwtTokenUtil.generateAccessToken(verifedUser));
     }
 }
