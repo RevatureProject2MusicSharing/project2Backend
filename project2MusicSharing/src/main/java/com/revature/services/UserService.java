@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,9 +50,10 @@ public class UserService {
             throw new IllegalArgumentException("This username already exists!");
         }
 
-
         userDAO.save(user);
-        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
+
+
+        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole(),jwtTokenUtil.generateAccessToken(user));
     }
 
     public String updateRole(int id, String newRole) {
@@ -92,13 +94,11 @@ public class UserService {
         return outgoingUserList;
     }
 
-    public String verifyUser(User user) {
-        Authentication authentication = authenticationManger.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-        if(authentication.isAuthenticated()){
-            return jwtTokenUtil.generateAccessToken(user);
-        }
-        else{
-            return "failed";
-        }
+    public OutgoingUserDTO loginUser(User user) {
+        Authentication authentication = authenticationManger.authenticate(
+            new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole(),jwtTokenUtil.generateAccessToken(user));
     }
 }

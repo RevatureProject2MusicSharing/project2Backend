@@ -24,12 +24,12 @@ public class AuthenticationController {
     @PostMapping("/register")
     ResponseEntity<OutgoingUserDTO> registerUser(@RequestBody User user) {
         OutgoingUserDTO outgoingUser = userService.addUser(user);
-        if(outgoingUser != null && !userService.verifyUser(user).equals("failed")) {
-            outgoingUser.setJWT(userService.verifyUser(user));
-            return ResponseEntity.status(201).body(outgoingUser);
-        }
-        else{
-            return ResponseEntity.status(400).body(null);
-        }
+        return ResponseEntity.status(201).body(outgoingUser);
+    }
+
+    @PostMapping("/login")
+    ResponseEntity<OutgoingUserDTO> loginUser(@RequestBody User user) {
+        OutgoingUserDTO outgoingUser = userService.loginUser(user);
+        return ResponseEntity.status(200).body(outgoingUser);
     }
 }

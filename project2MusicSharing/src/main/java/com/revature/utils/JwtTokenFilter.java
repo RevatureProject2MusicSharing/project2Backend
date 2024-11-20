@@ -40,6 +40,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
         FilterChain filterChain) throws ServletException, IOException {
 
+
+        String path = request.getServletPath();
+        if ("/register".equals(path) || "/login".equals(path)) {
+            filterChain.doFilter(request, response); // Continue without processing
+            return;
+        }
         //If the Authorization header of the request doesn’t contain a Bearer token,
         //Run the filter without doing anything else. (The request will fail later if JWT is needed)
         if (!hasAuthorizationBearer(request)) {
