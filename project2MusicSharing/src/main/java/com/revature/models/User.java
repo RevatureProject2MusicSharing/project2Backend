@@ -3,6 +3,7 @@ package com.revature.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.Set;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,8 +13,8 @@ import java.util.List;
 @Entity(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID userId;
 
     @Column(nullable = false, unique = true)
     private String username;
@@ -31,18 +32,18 @@ public class User {
         this.role = "user";
     }
 
-    public User(int userId, String username, String password, String role) {
+    public User(UUID userId, String username, String password, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public int getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 
