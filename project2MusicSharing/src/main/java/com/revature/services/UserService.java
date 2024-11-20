@@ -3,7 +3,11 @@ package com.revature.services;
 import com.revature.daos.UserDAO;
 import com.revature.models.dtos.OutgoingUserDTO;
 import com.revature.models.User;
+import com.revature.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +17,21 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
 
     //Adding a password encoder to encrypted passwords
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManger;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder) {
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManger,
+        JwtTokenUtil jwtTokenUtil) {
 
         this.userDAO = userDAO;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManger = authenticationManger;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     public OutgoingUserDTO addUser(User user) {
@@ -36,11 +45,12 @@ public class UserService {
         //Password Encryption
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         //Use our password encoder autowired in SecurityConfig to
-
+        if(userDAO.findByUsername(user.getUsername())!=null) {
+            throw new IllegalArgumentException("This username already exists!");
+        }
 
 
         userDAO.save(user);
-
         return new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
     }
 
@@ -80,5 +90,15 @@ public class UserService {
             outgoingUserList.add(outgoingUser);
         }
         return outgoingUserList;
+    }
+
+    public String verifyUser(User user) {
+        Authentication authentication = authenticationManger.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        if(authentication.isAuthenticated()){
+            return jwtTokenUtil.generateAccessToken(user);
+        }
+        else{
+            return "failed";
+        }
     }
 }

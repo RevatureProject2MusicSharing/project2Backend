@@ -24,13 +24,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-//        http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-//        http.csrf(csrf -> csrf.disable());
-//        return http.build();
-//    }
-
     private final UserDAO userDAO;
 
     //used for JWT token validation (We wrote this Class)
@@ -85,15 +78,12 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth ->
-                auth.requestMatchers(new AntPathRequestMatcher("/users/**", HttpMethod.POST.toString())).permitAll()
-                    .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers(new AntPathRequestMatcher("/users/**")).hasAuthority("admin")
-                    .anyRequest().authenticated()
-            )
+                auth.requestMatchers("/register","/login").permitAll()
+                    .anyRequest().authenticated())
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
-    //TODO: this would be cleaner if addUser was part of the auth controller, which is where I usually put it.
+    //
 
 }
