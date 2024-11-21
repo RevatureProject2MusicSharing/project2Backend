@@ -85,7 +85,8 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth ->
-                auth.requestMatchers("/register","/login").permitAll()
+                auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                    .requestMatchers("/register","/login").permitAll()
                     .anyRequest().authenticated())
             .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
@@ -94,7 +95,7 @@ public class SecurityConfig {
     //
     private CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Specify allowed origin
+        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Specify allowed origin
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("*")); // Allow all headers
         configuration.setAllowCredentials(true); // Allow credentials if needed
