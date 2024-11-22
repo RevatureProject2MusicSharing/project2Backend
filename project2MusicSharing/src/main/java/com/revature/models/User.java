@@ -23,7 +23,7 @@ public class User {
 
     private String role;
 
-    @ManyToMany(mappedBy = "userList")
+    @ManyToMany(mappedBy = "userList", cascade = CascadeType.DETACH)
     @JsonIgnore
     private Set<Playlist> playlistList;
 
