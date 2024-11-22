@@ -25,6 +25,9 @@ public class Song {
     @Column(nullable = false)
     private String genre;
 
+    @Column(nullable = false)
+    private String artistName;
+
     @ManyToMany
     @JoinTable(
         name = "song_playlist",
@@ -37,11 +40,11 @@ public class Song {
     public Song() {
     }
 
-    public Song(int songId, String songName, String youtubeLink, String genre, List<Playlist> playlistList) {
-        this.songId = songId;
+    public Song(String songName, String youtubeLink, String genre, String artistName, List<Playlist> playlistList) {
         this.songName = songName;
         this.youtubeLink = youtubeLink;
         this.genre = genre;
+        this.artistName = artistName;
         this.playlistList = playlistList;
     }
 
@@ -75,6 +78,14 @@ public class Song {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 
     public List<Playlist> getPlaylistList() {

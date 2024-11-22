@@ -51,6 +51,13 @@ public class SongController {
         return ResponseEntity.ok(songService.removeSongById(songId));
     }
 
+    @PutMapping("/{songId}")
+    public ResponseEntity<Song> updateSongById
+            (@PathVariable int songId, @RequestBody IncomingSongDTO incomingSongDTO) {
+        return ResponseEntity.ok(songService.updateSong(songId, incomingSongDTO));
+    }
+
+
     @ExceptionHandler
     public ResponseEntity<String> illegalArgumentHandler(IllegalArgumentException e) {
         return ResponseEntity.status(400).body(e.getMessage());

@@ -22,8 +22,8 @@ public class SongService {
     }
 
     public Song addSong(IncomingSongDTO incomingSongDTO) {
-        Song newSong = new Song(0, incomingSongDTO.getSongName(),
-                incomingSongDTO.getYoutubeLink(), incomingSongDTO.getGenre(), null);
+        Song newSong = new Song(incomingSongDTO.getSongName(),
+                incomingSongDTO.getYoutubeLink(), incomingSongDTO.getGenre(), incomingSongDTO.getArtistName(), null);
         songDAO.save(newSong);
         return newSong;
     }
@@ -45,6 +45,17 @@ public class SongService {
     public Song randomSongSelector() {
         return songDAO.findRandomSong().orElseThrow(() ->
                 new IllegalArgumentException("No songs available"));
+    }
+
+    public Song updateSong(int id, IncomingSongDTO incomingSongDTO) {
+        Song updatedSong = songDAO.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("No song found with id: " + id));
+        updatedSong.setSongName(incomingSongDTO.getSongName());
+        updatedSong.setYoutubeLink(incomingSongDTO.getYoutubeLink());
+        updatedSong.setGenre(incomingSongDTO.getGenre());
+        updatedSong.setArtistName(incomingSongDTO.getArtistName());
+        songDAO.save(updatedSong);
+        return updatedSong;
     }
 
 }
