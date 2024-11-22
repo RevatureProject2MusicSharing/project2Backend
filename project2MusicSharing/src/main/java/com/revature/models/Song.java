@@ -40,8 +40,7 @@ public class Song {
     public Song() {
     }
 
-    public Song(int i, String songName, String youtubeLink, String genre, String artistName, List<Playlist> playlistList) {
-        this.songId = songId;
+    public Song(String songName, String youtubeLink, String genre, String artistName, List<Playlist> playlistList) {
         this.songName = songName;
         this.youtubeLink = youtubeLink;
         this.genre = genre;

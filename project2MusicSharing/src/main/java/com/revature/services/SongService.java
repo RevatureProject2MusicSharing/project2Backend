@@ -22,7 +22,7 @@ public class SongService {
     }
 
     public Song addSong(IncomingSongDTO incomingSongDTO) {
-        Song newSong = new Song(0, incomingSongDTO.getSongName(),
+        Song newSong = new Song(incomingSongDTO.getSongName(),
                 incomingSongDTO.getYoutubeLink(), incomingSongDTO.getGenre(), incomingSongDTO.getArtistName(), null);
         songDAO.save(newSong);
         return newSong;
