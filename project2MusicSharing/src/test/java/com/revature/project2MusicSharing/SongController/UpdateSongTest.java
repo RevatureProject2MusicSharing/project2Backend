@@ -55,7 +55,7 @@ public class UpdateSongTest {
 
         String songJson = objectMapper.writeValueAsString(updatedSong);
 
-        mockMvc.perform(put("/songs/1")
+        mockMvc.perform(put("/songs/100")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(songJson))
@@ -70,11 +70,11 @@ public class UpdateSongTest {
                 "https://www.youtube.com/watch?v=5u4xTa3LR2U",
                 "Family",
                 "Person",
-                18);
+                1);
 
         String songJson = objectMapper.writeValueAsString(updatedSong);
 
-        mockMvc.perform(put("/songs/19")
+        mockMvc.perform(put("/songs/1")
                         .header("Authorization", "Bearer " + token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(songJson))

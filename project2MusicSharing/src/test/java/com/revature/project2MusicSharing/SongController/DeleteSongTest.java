@@ -44,14 +44,14 @@ public class DeleteSongTest {
 
     @Test
     public void deleteSongNotFound() throws Exception {
-        mockMvc.perform(delete("/songs/1")
+        mockMvc.perform(delete("/songs/100")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void deleteSongSuccess() throws Exception {
-        mockMvc.perform(delete("/songs/19")
+        mockMvc.perform(delete("/songs/3")
                         .header("Authorization", "Bearer " + token))
                 .andExpect(status().isOk());
     }
