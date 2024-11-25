@@ -35,3 +35,6 @@ build/
 #Ignore Temporary Files
 *~
 
+#Ignore logback.log
+logback.log
+

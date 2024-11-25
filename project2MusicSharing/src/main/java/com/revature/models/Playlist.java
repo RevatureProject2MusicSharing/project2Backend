@@ -58,13 +58,13 @@ public class Playlist {
         this.userList = userList;
     }
 
-    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<Song> songList, Set<User> userList) {
-        this.playlistId = playlistId;
-        this.playlistName = playlistName;
-        this.isPublic = isPublic;
-        this.songList = songList;
-        this.userList = userList;
-    }
+//    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<Song> songList, Set<User> userList) {
+//        this.playlistId = playlistId;
+//        this.playlistName = playlistName;
+//        this.isPublic = isPublic;
+//        this.songList = songList;
+//        this.userList = userList;
+//    }
 // Made two NEW Constructors for the playlist and the
     // USer and Song List
     /* Not sure if it is needed */
