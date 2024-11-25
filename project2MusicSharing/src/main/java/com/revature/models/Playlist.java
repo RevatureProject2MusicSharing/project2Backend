@@ -35,7 +35,7 @@ public class Playlist {
     @Column(nullable = true)
     private boolean isPublic = true;
 
-    @ManyToMany(mappedBy = "playlistList", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "playlistList", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Song> songList;
 
     @ManyToMany
@@ -49,13 +49,6 @@ public class Playlist {
 
 
     public Playlist() {
-    }
-
-    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<User> userList) {
-        this.playlistId = playlistId;
-        this.playlistName = playlistName;
-        this.isPublic = isPublic;
-        this.userList = userList;
     }
 
     public Playlist(int playlistId, String playlistName, boolean isPublic, Set<Song> songList, Set<User> userList) {
