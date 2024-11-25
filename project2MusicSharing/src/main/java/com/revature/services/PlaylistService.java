@@ -1,7 +1,7 @@
 package com.revature.services;
-import com.revature.DAOs.SongDAO;
-import com.revature.DAOs.PlaylistDAO;
-import com.revature.DAOs.UserDAO;
+import com.revature.daos.SongDAO;
+import com.revature.daos.PlaylistDAO;
+import com.revature.daos.UserDAO;
 import com.revature.models.Playlist;
 import com.revature.models.Song;
 import com.revature.models.User;
