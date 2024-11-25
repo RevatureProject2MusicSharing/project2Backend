@@ -1,40 +1,54 @@
 package com.revature.controllers;
 
-import com.revature.models.dtos.IncomingPlaylistDTO;
 import com.revature.models.Playlist;
+import com.revature.models.Song;
+import com.revature.models.dtos.IncomingPlaylistDTO;
 import com.revature.services.PlaylistService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-/* 11/14/24 Post working but without user and playlist
-* options needing to be input. Need to make functionality where
-* user who is logged in is automatially the owner of the playlist
-* and then we can add the songs and other users to after  */
-
+import java.util.Set;
 
 @RestController
-@RequestMapping("/playlists")
 @CrossOrigin
+@RequestMapping("/playlists")
 public class PlaylistController {
-
-    private PlaylistService playlistService;
+    PlaylistService playlistService;
 
     @Autowired
-    public PlaylistController (PlaylistService playlistService){
+    public PlaylistController(PlaylistService playlistService) {
         this.playlistService = playlistService;
     }
 
-
-    // Create a Playlist
     @PostMapping
-    public ResponseEntity<Playlist> insertPlaylist(@RequestBody IncomingPlaylistDTO playlistDTO){
-        Playlist p1 = playlistService.addPlayList(playlistDTO);
-
-        return ResponseEntity.status(201).body(p1);
-
+    ResponseEntity<Playlist> CreatePlaylist(@RequestBody IncomingPlaylistDTO playlist) {
+        return ResponseEntity.status(202).body(playlistService.CreatePlaylist(playlist));
     }
 
+    @PatchMapping("/{id}")
+    ResponseEntity<String> addSong(@PathVariable int id, @RequestBody String name) {
+        return ResponseEntity.ok().body(playlistService.addSongToPlayList(id, name));
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<Set<Playlist>> getAllSongsinUser(@PathVariable int id) {
+        return ResponseEntity.ok().body(playlistService.getSongsInPlaylistByUserId(id));
+    }
+
+    @GetMapping("/user/{id}")
+    ResponseEntity<Set<Song>> getSongsById(@PathVariable int id) {
+        return ResponseEntity.ok().body(playlistService.getAllSongsById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<String> deletePlaylist(@PathVariable int id) {
+        return ResponseEntity.ok().body(playlistService.deletePlaylist(id));
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> illegalArgumentHandler(IllegalArgumentException e) {
+        return ResponseEntity.status(400).body(e.getMessage());
+    }
 }

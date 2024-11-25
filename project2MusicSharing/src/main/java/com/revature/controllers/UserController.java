@@ -37,4 +37,9 @@ public class UserController {
     ResponseEntity<List<OutgoingUserDTO>> allUsers() {
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
+
+    @ExceptionHandler
+    public ResponseEntity<String> illegalArgumentHandler(IllegalArgumentException e) {
+        return ResponseEntity.status(400).body(e.getMessage());
+    }
 }
