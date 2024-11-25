@@ -4,6 +4,9 @@ import com.revature.daos.UserDAO;
 import com.revature.models.dtos.OutgoingUserDTO;
 import com.revature.models.User;
 import com.revature.utils.JwtTokenUtil;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +29,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManger;
     private final JwtTokenUtil jwtTokenUtil;
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManger,
@@ -52,6 +56,7 @@ public class UserService {
             throw new IllegalArgumentException("This username already exists!");
         }
 
+        log.info("User " + user.getUsername() + " has been added!");
         return userDAO.save(user);
     }
 
@@ -62,6 +67,7 @@ public class UserService {
         }
         user.get().setRole(newRole);
         userDAO.save(user.get());
+        log.info("User ID: " + id + " has been updated!");
         if(newRole.equals("admin") || newRole.equals("Admin")) {
             return "User ID: " + id + " has promoted to an admin";
         }
@@ -88,7 +94,12 @@ public class UserService {
         List<User> users = userDAO.findAll();
         List<OutgoingUserDTO> outgoingUserList = new ArrayList<>();
         for(User user: users) {
-            OutgoingUserDTO outgoingUser = new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
+            OutgoingUserDTO outgoingUser = new OutgoingUserDTO(
+              
+              
+              
+              
+              UserId(), user.getUsername(), user.getRole());
             outgoingUserList.add(outgoingUser);
         }
         return outgoingUserList;
@@ -100,6 +111,7 @@ public class UserService {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User verifedUser = userDAO.findByUsername(user.getUsername());
+        log.info("User " + user.getUsername() + " has logged in!");
         return new OutgoingUserDTO(verifedUser.getUserId(), verifedUser.getUsername(), verifedUser.getRole(),jwtTokenUtil.generateAccessToken(verifedUser));
     }
 }

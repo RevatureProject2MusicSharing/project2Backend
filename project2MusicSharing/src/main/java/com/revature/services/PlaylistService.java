@@ -1,11 +1,13 @@
 package com.revature.services;
 import com.revature.DAOs.SongDAO;
 import com.revature.DAOs.PlaylistDAO;
-import com.revature.daos.UserDAO;
+import com.revature.DAOs.UserDAO;
 import com.revature.models.Playlist;
 import com.revature.models.Song;
 import com.revature.models.User;
 import com.revature.models.dtos.IncomingPlaylistDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class PlaylistService {
     private PlaylistDAO playlistDAO;
     private UserDAO userDAO;
     private SongDAO songDAO;
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlaylistService.class);
 
     @Autowired
     public PlaylistService(PlaylistDAO playlistDAODAO, UserDAO userDAO, SongDAO songDAO) {
@@ -96,8 +99,5 @@ public class PlaylistService {
         userDAO.deleteById(id);
         return "Playlist ID: " + id + " has been deleted!";
     }
-
-
-
 
 }
