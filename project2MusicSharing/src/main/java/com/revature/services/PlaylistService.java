@@ -53,15 +53,16 @@ public class PlaylistService {
         if(playlist.isEmpty() || song.isEmpty()) {
             throw new IllegalArgumentException("Cannot find playlist or or song id!");
         }
-        Set<Song> songList = playlist.get().getSongList();
+        Playlist newPlayList = playlist.get();
+        Set<Song> songList = newPlayList.getSongList();
         Set<Song> newSongList = new HashSet<>(songList);
         newSongList.add(song.get());
-        playlist.get().setSongList(newSongList);
+        newPlayList.setSongList(newSongList);
         System.out.println("hello: testing");
-        System.out.println(playlist.get().getSongList());
+        System.out.println(newPlayList.getSongList());
         System.out.println("ending testing");
         playlistDAO.save(playlist.get());
-        return playlist.get();
+        return newPlayList;
 //        return song + " has been added to playlist " + playlist.get().getPlaylistName();
     }
 
@@ -96,7 +97,7 @@ public class PlaylistService {
         if(playlist.isEmpty()) {
             throw new IllegalArgumentException("Cannot find playlist ID");
         }
-        userDAO.deleteById(id);
+        playlistDAO.deleteById(id);
         return "Playlist ID: " + id + " has been deleted!";
     }
 

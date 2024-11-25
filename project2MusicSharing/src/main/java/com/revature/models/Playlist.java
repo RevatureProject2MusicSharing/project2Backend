@@ -1,6 +1,8 @@
 package com.revature.models;
 
 import jakarta.persistence.*;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.stereotype.Component;
@@ -36,14 +38,14 @@ public class Playlist {
     private boolean isPublic = true;
 
     @ManyToMany(mappedBy = "playlistList", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Song> songList;
+    private Set<Song> songList = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
         name = "playlist_user",
         joinColumns = @JoinColumn(name = "playlistId"),
         inverseJoinColumns = @JoinColumn(name = "userId"))
-    private Set<User> userList;
+    private Set<User> userList = new HashSet<>();
 
     //boilerplate code-----------------------
 
