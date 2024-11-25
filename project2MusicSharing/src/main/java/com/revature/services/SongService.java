@@ -1,7 +1,7 @@
 package com.revature.services;
 
-import com.revature.daos.SongDAO;
-import com.revature.daos.PlaylistDAO;
+import com.revature.DAOs.SongDAO;
+import com.revature.DAOs.PlaylistDAO;
 import com.revature.models.Song;
 import com.revature.models.dtos.IncomingSongDTO;
 import org.springframework.beans.factory.annotation.Autowired;

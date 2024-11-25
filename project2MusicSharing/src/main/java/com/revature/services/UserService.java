@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -59,8 +60,8 @@ public class UserService {
         return userDAO.save(user);
     }
 
-    public String updateRole(int id, String newRole) {
-        Optional<User> user = userDAO.findById(id);
+    public String updateRole(UUID id, String newRole) {
+        Optional<User> user = userDAO.findByUserId(id);
         if(user.isEmpty()) {
             throw new IllegalArgumentException("This user does not exist!");
         }
@@ -74,18 +75,18 @@ public class UserService {
             return "User ID: " + id + " has been denoted to a user";
         }
         else {
+            System.out.println(newRole);
             throw new IllegalArgumentException("This is not a valid role type!");
         }
 
     }
 
-    public String deleteUser(int id) {
-        Optional<User> user = userDAO.findById(id);
+    public String deleteUser(UUID id) {
+        Optional<User> user = userDAO.findByUserId(id);
         if(user.isEmpty()) {
             throw new IllegalArgumentException("This user does not exist!");
         }
-        userDAO.deleteById(id);
-        log.info("User ID: " + id + " has been deleted!");
+        userDAO.delete(user.get());
         return "User ID: " + id + " has been deleted!";
     }
 
@@ -93,7 +94,12 @@ public class UserService {
         List<User> users = userDAO.findAll();
         List<OutgoingUserDTO> outgoingUserList = new ArrayList<>();
         for(User user: users) {
-            OutgoingUserDTO outgoingUser = new OutgoingUserDTO(user.getUserId(), user.getUsername(), user.getRole());
+            OutgoingUserDTO outgoingUser = new OutgoingUserDTO(
+              
+              
+              
+              
+              UserId(), user.getUsername(), user.getRole());
             outgoingUserList.add(outgoingUser);
         }
         return outgoingUserList;

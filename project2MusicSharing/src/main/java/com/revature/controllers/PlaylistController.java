@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
@@ -28,16 +29,16 @@ public class PlaylistController {
     }
 
     @PatchMapping("/{id}")
-    ResponseEntity<String> addSong(@PathVariable int id, @RequestBody String name) {
+    ResponseEntity<Playlist> addSong(@PathVariable int id, @RequestBody int name) {
         return ResponseEntity.ok().body(playlistService.addSongToPlayList(id, name));
     }
 
-    @GetMapping("/{id}")
-    ResponseEntity<Set<Playlist>> getAllSongsinUser(@PathVariable int id) {
+    @GetMapping("/user/{id}")
+    ResponseEntity<Set<Song>> getAllSongsinUser(@PathVariable UUID id) {
         return ResponseEntity.ok().body(playlistService.getSongsInPlaylistByUserId(id));
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<Set<Song>> getSongsById(@PathVariable int id) {
         return ResponseEntity.ok().body(playlistService.getAllSongsById(id));
     }

@@ -1,14 +1,17 @@
 package com.revature.models.dtos;
 
+import java.util.UUID;
+
 public class IncomingPlaylistDTO {
     private String playlistName;
     private boolean isPublic;
-    private int userId;
+    private UUID userId;
 
     public IncomingPlaylistDTO() {
+        isPublic = false;
     }
 
-    public IncomingPlaylistDTO(String playlistName, boolean isPublic, int userId) {
+    public IncomingPlaylistDTO(String playlistName, boolean isPublic, UUID userId) {
         this.playlistName = playlistName;
         this.isPublic = isPublic;
         this.userId = userId;
@@ -30,11 +33,11 @@ public class IncomingPlaylistDTO {
         isPublic = aPublic;
     }
 
-    public int getUserId() {
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

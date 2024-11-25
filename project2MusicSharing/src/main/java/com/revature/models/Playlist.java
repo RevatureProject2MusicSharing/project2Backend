@@ -35,7 +35,7 @@ public class Playlist {
     @Column(nullable = true)
     private boolean isPublic = true;
 
-    @ManyToMany(mappedBy = "playlistList", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "playlistList", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Song> songList;
 
     @ManyToMany
@@ -51,39 +51,16 @@ public class Playlist {
     public Playlist() {
     }
 
-    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<User> userList) {
+    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<Song> songList, Set<User> userList) {
         this.playlistId = playlistId;
         this.playlistName = playlistName;
         this.isPublic = isPublic;
+        this.songList = songList;
         this.userList = userList;
     }
-
-//    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<Song> songList, Set<User> userList) {
-//        this.playlistId = playlistId;
-//        this.playlistName = playlistName;
-//        this.isPublic = isPublic;
-//        this.songList = songList;
-//        this.userList = userList;
-//    }
 // Made two NEW Constructors for the playlist and the
     // USer and Song List
     /* Not sure if it is needed */
-
-
-    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<User> userList, Set<Song> songList) {
-        this.playlistId = playlistId;
-        this.playlistName = playlistName;
-        this.isPublic = isPublic;
-        this.userList = userList;
-        this.songList = songList;
-    }
-
-    public Playlist(String playlistName, int playlistId, boolean isPublic, Set<Song> songList) {
-        this.playlistName = playlistName;
-        this.playlistId = playlistId;
-        this.isPublic = isPublic;
-        this.songList = songList;
-    }
 
     public Set<Song> getSongList() {
         return songList;
