@@ -1,24 +1,42 @@
 package com.revature.models.dtos;
 
+import java.util.UUID;
+
 public class OutgoingUserDTO {
-    private int userId;
+    private UUID userId;
     private String username;
     private String role;
+    private String JWT;
 
     public OutgoingUserDTO() {
     }
 
-    public OutgoingUserDTO(int userId, String username, String role) {
+    public OutgoingUserDTO(UUID userId, String username, String role) {
         this.userId = userId;
         this.username = username;
         this.role = role;
     }
 
-    public int getUserId() {
+    public OutgoingUserDTO(UUID userId, String username, String role, String JWT) {
+        this.userId = userId;
+        this.username = username;
+        this.role = role;
+        this.JWT = JWT;
+    }
+
+    public String getJWT() {
+        return JWT;
+    }
+
+    public void setJWT(String JWT) {
+        this.JWT = JWT;
+    }
+
+    public UUID getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(UUID userId) {
         this.userId = userId;
     }
 

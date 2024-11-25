@@ -8,16 +8,18 @@ public class IncomingSongDTO {
     private String songName;
     private String youtubeLink;
     private String genre;
+    private String artistName;
     private int playlistId;
 
 
     public IncomingSongDTO() {
     }
 
-    public IncomingSongDTO(String songName, String youtubeLink, String genre, int playlistId) {
+    public IncomingSongDTO(String songName, String youtubeLink, String genre, String artistName, int playlistId) {
         this.songName = songName;
         this.youtubeLink = youtubeLink;
         this.genre = genre;
+        this.artistName = artistName;
         this.playlistId = playlistId;
 
     }
@@ -52,6 +54,14 @@ public class IncomingSongDTO {
 
     public void setPlaylistId(int playlistId) {
         this.playlistId = playlistId;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 
     @Override

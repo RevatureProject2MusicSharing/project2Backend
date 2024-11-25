@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 
 @RestController
@@ -27,6 +28,12 @@ public class SongController {
         return ResponseEntity.ok(allSongs);
     }
 
+    @GetMapping("/playlist/{playlistId}")
+    public ResponseEntity<List<Song>> getSongsByPlaylist(@PathVariable int playlistId) {
+        List<Song> songs = songService.getSongsByPlaylistId(playlistId);
+        return ResponseEntity.ok(songs);
+    }
+
     @PostMapping
     public ResponseEntity<Song> registerSong(@RequestBody IncomingSongDTO incomingSongDTO) {
         Song song = songService.addSong(incomingSongDTO);
@@ -43,6 +50,13 @@ public class SongController {
     public ResponseEntity<Song> deleteSongById(@PathVariable int songId) {
         return ResponseEntity.ok(songService.removeSongById(songId));
     }
+
+    @PutMapping("/{songId}")
+    public ResponseEntity<Song> updateSongById
+            (@PathVariable int songId, @RequestBody IncomingSongDTO incomingSongDTO) {
+        return ResponseEntity.ok(songService.updateSong(songId, incomingSongDTO));
+    }
+
 
     @ExceptionHandler
     public ResponseEntity<String> illegalArgumentHandler(IllegalArgumentException e) {

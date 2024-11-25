@@ -6,6 +6,18 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 
+
+/* 11/14/24 Added many to many relationships for
+* users and songs list so songs can be put onto playlist and
+* users can ask for permissions. Old ToString is down at the
+* bottom and may need to be changed possibly
+* as well as the constructors
+*  */
+
+/* added true as the default for whether playlist
+* is public or private*/
+
+
 @Entity
 @Table(name = "playlist")
 @Component
@@ -21,7 +33,7 @@ public class Playlist {
 
 
     @Column(nullable = true)
-    private boolean isPublic;
+    private boolean isPublic = true;
 
     @ManyToMany(mappedBy = "playlistList", cascade = CascadeType.ALL)
     private Set<Song> songList;
@@ -52,6 +64,25 @@ public class Playlist {
         this.isPublic = isPublic;
         this.songList = songList;
         this.userList = userList;
+    }
+// Made two NEW Constructors for the playlist and the
+    // USer and Song List
+    /* Not sure if it is needed */
+
+
+    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<User> userList, Set<Song> songList) {
+        this.playlistId = playlistId;
+        this.playlistName = playlistName;
+        this.isPublic = isPublic;
+        this.userList = userList;
+        this.songList = songList;
+    }
+
+    public Playlist(String playlistName, int playlistId, boolean isPublic, Set<Song> songList) {
+        this.playlistName = playlistName;
+        this.playlistId = playlistId;
+        this.isPublic = isPublic;
+        this.songList = songList;
     }
 
     public Set<Song> getSongList() {
@@ -94,12 +125,26 @@ public class Playlist {
         isPublic = aPublic;
     }
 
+
+
+//    @Override
+//    public String toString() {
+//        return "Playlist{" +
+//                "playlistId=" + playlistId +
+//                ", playlistName='" + playlistName + '\'' +
+//                ", isPublic=" + isPublic +
+//                '}';
+//    }
+
+
     @Override
     public String toString() {
         return "Playlist{" +
                 "playlistId=" + playlistId +
                 ", playlistName='" + playlistName + '\'' +
                 ", isPublic=" + isPublic +
+                ", songList=" + songList +
+                ", userList=" + userList +
                 '}';
     }
 }
