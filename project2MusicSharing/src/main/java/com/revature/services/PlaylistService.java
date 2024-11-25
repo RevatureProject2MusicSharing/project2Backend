@@ -1,8 +1,7 @@
 package com.revature.services;
 import com.revature.DAOs.SongDAO;
-import com.revature.DAOs.UserDAO;
-import com.revature.DAOs.PlaylistDAO;
-
+import com.revature.daos.PlaylistDAO;
+import com.revature.daos.UserDAO;
 import com.revature.models.Playlist;
 import com.revature.models.Song;
 import com.revature.models.User;
@@ -15,8 +14,8 @@ import java.util.*;
 @Service
 public class PlaylistService {
 
-    private PlaylistDAO playlistDAO;
-    private UserDAO userDAO;
+    private com.revature.daos.PlaylistDAO playlistDAO;
+    private com.revature.daos.UserDAO userDAO;
     private SongDAO songDAO;
 
     @Autowired

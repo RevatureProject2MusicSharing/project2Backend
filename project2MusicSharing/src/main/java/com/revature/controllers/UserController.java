@@ -3,11 +3,14 @@ package com.revature.controllers;
 import com.revature.models.dtos.OutgoingUserDTO;
 import com.revature.models.User;
 import com.revature.services.UserService;
+import com.revature.utils.JwtTokenUtil;
+import io.jsonwebtoken.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
@@ -15,6 +18,7 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     public UserController(UserService userService) {
@@ -24,12 +28,12 @@ public class UserController {
 
 
     @PatchMapping("/{id}")
-    ResponseEntity<String> updateRole(@PathVariable int id, @RequestBody String newRole) {
+    ResponseEntity<String> updateRole(@PathVariable UUID id, @RequestBody String newRole) {
         return ResponseEntity.ok().body(userService.updateRole(id, newRole));
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteUser(@PathVariable int id) {
+    ResponseEntity<String> deleteUser(@PathVariable UUID id) {
         return ResponseEntity.ok().body(userService.deleteUser(id));
     }
 

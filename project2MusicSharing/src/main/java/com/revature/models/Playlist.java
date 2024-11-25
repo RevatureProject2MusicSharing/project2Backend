@@ -69,22 +69,6 @@ public class Playlist {
     // USer and Song List
     /* Not sure if it is needed */
 
-
-    public Playlist(int playlistId, String playlistName, boolean isPublic, Set<User> userList, Set<Song> songList) {
-        this.playlistId = playlistId;
-        this.playlistName = playlistName;
-        this.isPublic = isPublic;
-        this.userList = userList;
-        this.songList = songList;
-    }
-
-    public Playlist(String playlistName, int playlistId, boolean isPublic, Set<Song> songList) {
-        this.playlistName = playlistName;
-        this.playlistId = playlistId;
-        this.isPublic = isPublic;
-        this.songList = songList;
-    }
-
     public Set<Song> getSongList() {
         return songList;
     }
