@@ -27,7 +27,7 @@ public class User implements UserDetails {
 
     private String role;
 
-    @ManyToMany(mappedBy = "userList", cascade = CascadeType.DETACH)
+    @ManyToMany(mappedBy = "userList", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Playlist> playlistList;
 

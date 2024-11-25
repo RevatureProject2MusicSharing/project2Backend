@@ -1,6 +1,6 @@
 package com.revature.configs;
 
-import com.revature.daos.UserDAO;
+import com.revature.DAOs.UserDAO;
 import com.revature.utils.JwtTokenFilter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
