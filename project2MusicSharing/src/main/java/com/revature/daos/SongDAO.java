@@ -1,4 +1,4 @@
-package com.revature.DAOs;
+package com.revature.daos;
 
 import com.revature.models.Song;
 import java.util.List;
