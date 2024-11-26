@@ -99,7 +99,7 @@ public class UserService {
               
               
               
-              UserId(), user.getUsername(), user.getRole());
+              user.getUserId(), user.getUsername(), user.getRole());
             outgoingUserList.add(outgoingUser);
         }
         return outgoingUserList;

@@ -28,8 +28,13 @@ public class PlaylistController {
         return ResponseEntity.status(202).body(playlistService.CreatePlaylist(playlist));
     }
 
+    @PatchMapping("/user/{id}/{uuid}")
+    ResponseEntity<Playlist> addUser(@PathVariable int id, @PathVariable UUID uuid) {
+        return ResponseEntity.ok().body(playlistService.addUser(id, uuid));
+    }
+
     @PatchMapping("/{id}")
-    ResponseEntity<Playlist> addSong(@PathVariable int id, @RequestBody int name) {
+    ResponseEntity<String> addSong(@PathVariable int id, @RequestBody int name) {
         return ResponseEntity.ok().body(playlistService.addSongToPlayList(id, name));
     }
 

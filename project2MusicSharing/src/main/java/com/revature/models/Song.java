@@ -28,12 +28,7 @@ public class Song {
     @Column(nullable = false)
     private String artistName;
 
-    @ManyToMany
-    @JoinTable(
-        name = "song_playlist",
-        joinColumns = @JoinColumn(name = "songId"),
-        inverseJoinColumns = @JoinColumn(name = "playlistId")
-    )
+    @ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "songList")
     @JsonIgnore
     private List<Playlist> playlistList;
 

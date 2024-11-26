@@ -37,7 +37,12 @@ public class Playlist {
     @Column(nullable = true)
     private boolean isPublic = true;
 
-    @ManyToMany(mappedBy = "playlistList", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany
+    @JoinTable(
+            name = "song_playlist",
+            joinColumns = @JoinColumn(name = "playlistId"),
+            inverseJoinColumns = @JoinColumn(name = "songId")
+    )
     private Set<Song> songList = new HashSet<>();
 
     @ManyToMany

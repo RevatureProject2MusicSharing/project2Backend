@@ -6,6 +6,7 @@ import com.revature.models.Playlist;
 import com.revature.models.Song;
 import com.revature.models.User;
 import com.revature.models.dtos.IncomingPlaylistDTO;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class PlaylistService {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlaylistService.class);
 
     @Autowired
-    public PlaylistService(PlaylistDAO playlistDAODAO, UserDAO userDAO, SongDAO songDAO) {
-        this.playlistDAO = playlistDAODAO;
+    public PlaylistService(PlaylistDAO playlistDAO, UserDAO userDAO, SongDAO songDAO) {
+        this.playlistDAO = playlistDAO;
         this.userDAO = userDAO;
         this.songDAO = songDAO;
     }
@@ -47,23 +48,34 @@ public class PlaylistService {
         }
     }
 
-    public Playlist addSongToPlayList(int id, int songName) {
+    public Playlist addUser(int id, UUID uuid) {
+        Optional<Playlist> playlist = playlistDAO.findById(id);
+        Optional<User> user = userDAO.findByUserId(uuid);
+        if(playlist.isEmpty() || user.isEmpty()) {
+            throw new IllegalArgumentException("Cannot find user or playlist id!");
+        }
+
+        Set<User> userSet = playlist.get().getUserList();
+        userSet.add(user.get());
+        playlistDAO.save(playlist.get());
+        return playlist.get();
+    }
+
+    @Transactional
+    public String addSongToPlayList(int id, int songName) {
         Optional<Song> song = songDAO.findById(songName);
         Optional<Playlist> playlist = playlistDAO.findById(id);
         if(playlist.isEmpty() || song.isEmpty()) {
             throw new IllegalArgumentException("Cannot find playlist or or song id!");
         }
-        Playlist newPlayList = playlist.get();
-        Set<Song> songList = newPlayList.getSongList();
-        Set<Song> newSongList = new HashSet<>(songList);
-        newSongList.add(song.get());
-        newPlayList.setSongList(newSongList);
+        Set<Song> songList = playlist.get().getSongList();
+        songList.add(song.get());
+        playlist.get().setSongList(songList);
         System.out.println("hello: testing");
-        System.out.println(newPlayList.getSongList());
         System.out.println("ending testing");
+
         playlistDAO.save(playlist.get());
-        return newPlayList;
-//        return song + " has been added to playlist " + playlist.get().getPlaylistName();
+        return song + " has been added to playlist " + playlist.get().getPlaylistName();
     }
 
     public Set<Song> getAllSongsById(int id) {
