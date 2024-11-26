@@ -71,6 +71,9 @@ public class PlaylistService {
         Set<Song> songList = playlist.get().getSongList();
         songList.add(song.get());
         playlist.get().setSongList(songList);
+        System.out.println("hello: testing");
+        System.out.println("ending testing");
+
         playlistDAO.save(playlist.get());
         return song + " has been added to playlist " + playlist.get().getPlaylistName();
     }
