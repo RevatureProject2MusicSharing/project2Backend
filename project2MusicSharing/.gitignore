@@ -37,5 +37,4 @@ build/
 
 #Ignore logback.log
 logback.log
-src/main/resources/logback.xml
 
