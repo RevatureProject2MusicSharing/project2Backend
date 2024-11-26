@@ -34,7 +34,7 @@ public class PlaylistController {
     }
 
     @PatchMapping("/{id}")
-    ResponseEntity<String> addSong(@PathVariable int id, @RequestBody int name) {
+    ResponseEntity<Playlist> addSong(@PathVariable int id, @RequestBody int name) {
         return ResponseEntity.ok().body(playlistService.addSongToPlayList(id, name));
     }
 

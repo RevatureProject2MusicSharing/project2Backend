@@ -62,7 +62,7 @@ public class PlaylistService {
     }
 
     @Transactional
-    public String addSongToPlayList(int id, int songName) {
+    public Playlist addSongToPlayList(int id, int songName) {
         Optional<Song> song = songDAO.findById(songName);
         Optional<Playlist> playlist = playlistDAO.findById(id);
         if(playlist.isEmpty() || song.isEmpty()) {
@@ -71,11 +71,10 @@ public class PlaylistService {
         Set<Song> songList = playlist.get().getSongList();
         songList.add(song.get());
         playlist.get().setSongList(songList);
-        System.out.println("hello: testing");
-        System.out.println("ending testing");
 
         playlistDAO.save(playlist.get());
-        return song + " has been added to playlist " + playlist.get().getPlaylistName();
+        return playlist.get();
+//        return song + " has been added to playlist " + playlist.get().getPlaylistName();
     }
 
     public Set<Song> getAllSongsById(int id) {
