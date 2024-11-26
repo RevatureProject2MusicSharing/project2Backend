@@ -9,7 +9,7 @@
 
     <!--This appender lets us see our logs in a file that will get generated for us-->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>logback.log</file>
+        <file>src/logs/logback.log</file>
         <append>true</append>
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
