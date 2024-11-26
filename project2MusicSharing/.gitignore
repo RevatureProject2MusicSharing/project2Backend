@@ -36,5 +36,4 @@ build/
 *~
 
 #Ignore logback.log
-logback.log
-
+../logback.log
